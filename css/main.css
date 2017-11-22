@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    text-align: center;
+}
+
+div.space {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: #000 2px solid;
+    margin: 1px;
+    border-radius: 5px;
+}
