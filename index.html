@@ -1,19 +1,58 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="css/skeleton.css" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
     </head>
     <body>
 
+        <div class="menu">
+        menu
+        </div>
+
         <div id="main" class="content">
-            <map-space v-for="space in spaces"></map-space>
+            <div v-for="h in height" class="row">
+                <map-space v-for="(w, index) in width" v-if="getSpace(w,h) != undefined" :space="getSpace(w,h)" :key="w"></map-space>
+                <!--<div class="space empty" v-else ></div>-->
+                <empty-space v-else :x="w" :y="h"></empty-space>
+            </div>
+
+            <main-popin v-if="displayPopin" :x="xPopin" :y="yPopin" :title="titlePopin"></main-popin>
+
         </div>
 
         <template id="t_space">
-            <div class="space">toto</div>
+            <div class="space" >
+                <div class="top">{{ space.number }}</div>
+                <div class="bottom">{{ resource }}</div>
+            </div>
+        </template>
+
+        <template id="t_empty_space">
+            <div class="empty space" @click="selectSpace" >
+            </div>
+        </template>
+
+        <template id="t_popin">
+            <div class="popin" :style="getCssPosition">
+                <div class="title">{{title}}</div>
+                <div class="corps">
+                    <input v-model.trim="number" type="text" placeholder="Number : XXX" />
+                    <div>{{warningMessage}}</div>
+                    <select v-model="resource">
+                        <option value="1">Wood</option>
+                        <option value="2">Stone</option>
+                    </select>
+                    <div>
+                        <button @click="validate" class="button-primary">Go</button>
+                        <button @click="close" >Close</button>
+                    </div>
+                </div>
+            </div>
         </template>
 
         <script src="js/vue.js"></script>
+        <script src="js/const.js"></script>
         <script src="js/model.js"></script>
         <script src="js/debug.js"></script>
         <script src="js/main.js"></script>

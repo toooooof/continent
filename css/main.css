@@ -10,4 +10,43 @@ div.space {
     border: #000 2px solid;
     margin: 1px;
     border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+div.space.empty {
+    border: #fff 2px solid;
+}
+
+div.space.empty:hover {
+    border: #aaa 2px solid;
+}
+
+div.menu {
+    background-color: #000;
+    color: #fff;
+    margin-bottom: 1em;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.row {
+    height: 106px;
+}
+
+.popin {
+    position: fixed;
+    width: 250px;
+    height: 250px;
+    background-color: rgba(0,0,0,0.4);
 }
