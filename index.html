@@ -38,7 +38,7 @@
                 <div class="title">{{title}}</div>
                 <div class="corps">
                     <input v-model.trim="number" type="text" placeholder="Number : XXX" />
-                    <div>{{warningMessage}}</div>
+                    <div v-if="warningMessage.length > 0" style="color:red">{{warningMessage}}</div>
                     <select v-model="resource">
                         <option value="1">Wood</option>
                         <option value="2">Stone</option>
