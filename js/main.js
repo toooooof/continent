@@ -11,6 +11,11 @@
                 return undefined;
             }
         },
+        methods: {
+            selectSpace: function(event) {
+                app.$emit('updateSpace', this.space.x, this.space.y, event.clientX, event.clientY);
+            }
+        }
 
     });
 
@@ -27,7 +32,7 @@
 
     Vue.component('main-popin', {
         template: "#t_popin",
-        props: ['x', 'y','title'],
+        props: ['x','y','title','space'],
         data: function() {
             return {
                 number: undefined,
@@ -52,8 +57,33 @@
             },
             close: function() {
                 app.$emit('closePopin');
+            },
+            initSpace: function() {
+                if (this.space == undefined) {
+                    this.number = undefined;
+                    this.resource = 1;
+                } else {
+                    this.number = this.space.number;
+                    this.resource = this.space.symbol;
+                }
             }
-        }
+        },
+
+        /*beforeUpdate: function() {
+           this.initSpace();
+        },*/
+
+        created: function() {
+            this.initSpace();
+        },
+
+        /*beforeUpdate: function() {
+            if (this.space != undefined && this.x == this.space.x && this.y == this.space.y ) {
+                this.number = this.space.number;
+            } else {
+                this.number = undefined;
+            }
+        }*/
 
     });
 
@@ -67,11 +97,12 @@
 
             currentX: 0,
             currentY: 0,
+            currentSpace: undefined,
 
             displayPopin: false,
             titlePopin: "",
             xPopin: -1,
-            yPopin: -1
+            yPopin: -1,
         },
 
         computed: {
@@ -107,12 +138,31 @@
 
         created : function() {
             this.$on('createSpace', function createSpace(x, y, cX, cY) {
-                this.currentX = x;
-                this.currentY = y;
-                this.xPopin = cX + 10;
-                this.yPopin = cY - 10;
-                this.titlePopin = "Add a new space";
-                this.displayPopin = true;
+                if (this.displayPopin == false) {
+                    this.currentX = x;
+                    this.currentY = y;
+                    this.xPopin = cX + 10;
+                    this.yPopin = cY - 10;
+                    this.titlePopin = "Add a new space";
+                    this.currentSpace = undefined;
+                    this.displayPopin = true;
+                } else {
+                    this.displayPopin = false;
+                }
+            });
+
+            this.$on('updateSpace', function (x, y, cX, cY) {
+                if (this.displayPopin == false) {
+                    this.currentX = x;
+                    this.currentY = y;
+                    this.xPopin = cX + 10;
+                    this.yPopin = cY - 10;
+                    this.titlePopin = "Update space";
+                    this.currentSpace = Model.get(x, y);
+                    this.displayPopin = true;
+                } else {
+                    this.displayPopin = false;
+                }
             });
 
             this.$on('closePopin', function() {

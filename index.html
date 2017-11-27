@@ -17,14 +17,14 @@
                 <empty-space v-else :x="w" :y="h"></empty-space>
             </div>
 
-            <main-popin v-if="displayPopin" :x="xPopin" :y="yPopin" :title="titlePopin"></main-popin>
+            <main-popin v-if="displayPopin" :x="xPopin" :y="yPopin" :title="titlePopin" :space="currentSpace"></main-popin>
 
         </div>
 
         <template id="t_space">
-            <div class="space" >
+            <div class="space" @click="selectSpace">
                 <div class="top">{{ space.number }}</div>
-                <div class="bottom">{{ resource }}</div>
+                <div v-if="space.symbol > 0" class="bottom">{{ resource }}</div>
             </div>
         </template>
 
@@ -40,6 +40,7 @@
                     <input v-model.trim="number" type="text" placeholder="Number : XXX" />
                     <div v-if="warningMessage.length > 0" style="color:red">{{warningMessage}}</div>
                     <select v-model="resource">
+                        <option value="0">Empty</option>
                         <option value="1">Wood</option>
                         <option value="2">Stone</option>
                     </select>
