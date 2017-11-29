@@ -1,4 +1,4 @@
-var defaultLang = "en";
+var defaultLang = "fr";
 
 var EMPTY = 0;
 var WOOD = 1;
@@ -12,6 +12,5 @@ function resourceAsTxt(val, lang) {
 
 var RESOURCES = {
     "en": ["Empty", "Wood", "Stone"],
-
     "fr": ["Vide", "Bois", "Pierre"]
 }
